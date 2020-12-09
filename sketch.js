@@ -162,30 +162,4 @@ function drawBox(color = 'black', area, fillColor, size = 4) {
     }
   }
 }
-
-
-// hand pose (deleted because of performance issues)
-// function drawKeypoints() {
-//   for (let i = 0; i < facePred.length; i += 1) {
-//     const keypoints = facePred[i].scaledMesh;
-    
-//     // hand
-//     for (let i = 0; i < handPred.length; i += 1) {
-//       const prediction = handPred[i];
-//       for (let j = 0; j < prediction.landmarks.length; j += 1) {
-//         const keypoint = prediction.landmarks[j];
-
-//         stroke('cornflowerblue');
-//         fill('rgba(0,0,0, 0.05)');
-//         strokeWeight(0.5);
-//         beginShape(LINES);
-//         vertex(keypoint[0], keypoint[1]);
-//         vertex(keypoint[2], keypoint[3]);
-//         endShape();
-
-//         ellipse(keypoint[0], keypoint[1], 2, 2);
-//       }
-//     }
-//   }
-// }
   
