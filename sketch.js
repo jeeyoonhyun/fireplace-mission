@@ -116,8 +116,9 @@ function draw() {
   for(let i = 0;i<particles.length;i++) {
     particles[i].createParticle();
     if (dist(mouthX, mouthY, particles[i].x, particles[i].y) < 50 && mouseIsPressed) {
-      particles.splice(i,1)
       selectedWords.push(particles[i].word);
+      particles.splice(i,1)
+      
     }
     particles[i].moveParticle();
   }
