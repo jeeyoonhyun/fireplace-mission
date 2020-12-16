@@ -7,8 +7,8 @@ let particles = [];
 let font;
 let wordlist = ["f", "he", "described", "a", "simple", "app", "for", "posting", "and", "viewing", "photos", "as", "a", "user", "would", "on", "nstagram", "the", "system", "generated", "the", "code", "needed", "to", "build", "it", "his", "code", "was", "sometimes", "flawed", "ut", "typically", "if", "r", "inger", "made", "just", "a", "tweak", "or", "two", "it", "worked", "as", "he", "wanted", "ts", "not", "absolutely", "perfect", "he", "said", "ut", "it", "is", "very", "very", "close"];
 let selectedWords = [];
-let mouthX;
-let mouthY;
+let mouthX, mouthY;
+let x_13, y_13, z_13, x_14, y_14, z_14;
 
 // particles
 class Particle {
@@ -76,6 +76,7 @@ const mesh = {
 function preload() {
   font = loadFont('./OpenSans.ttf');
 }
+
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight, WEBGL);
   canvas.position(0,0);
@@ -88,7 +89,11 @@ function setup() {
   facemesh = ml5.facemesh(video, modelReady);
   facemesh.on("predict", results => {
     facePred = results;  
+    // coordinates of upper lip center and lower lip center
+    [x_13, y_13, z_13] = [facePred[0].mesh[13][0], facePred[0].mesh[13][1], facePred[0].mesh[13][2]];
+    [x_14, y_14, z_14] = [facePred[0].mesh[14][0], facePred[0].mesh[14][1], facePred[0].mesh[14][2]];
   });
+
   
   video.hide();
   
@@ -99,6 +104,7 @@ function setup() {
 
 function modelReady() {
   console.log("Model ready!");
+  
 }
 
 function draw() {
@@ -161,6 +167,17 @@ function drawBox(color = 'black', area, fillColor, size = 4) {
         pop();
       }
     }
+  }
+}
+
+
+// calculate distance between points 13 and 14 (center of mouth)
+function mouthIsOpen() {
+
+  if (dist(x_13,y_13,z_13, x_14,y_14,z_14)> 5) {
+    return true;
+  } else {
+    return false;
   }
 }
   
