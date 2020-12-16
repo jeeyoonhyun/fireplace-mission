@@ -86,13 +86,16 @@ function setup() {
   video.size(windowWidth, windowHeight);
 
   // face mesh
+  //todo: if no face is detected on starting the model, ask user to refresh the page. facePred[0].faceInViewConfidence == 1
   facemesh = ml5.facemesh(video, modelReady);
   facemesh.on("predict", results => {
     facePred = results;  
-    mouthDistance = dist(
-      facePred[0].mesh[13][0], facePred[0].mesh[13][1], facePred[0].mesh[13][2],
-      facePred[0].mesh[14][0], facePred[0].mesh[14][1], facePred[0].mesh[14][2]
-    );
+    if (facePred[0]) { //only works when face is detected
+      mouthDistance = dist(
+        facePred[0].mesh[13][0], facePred[0].mesh[13][1], facePred[0].mesh[13][2],
+        facePred[0].mesh[14][0], facePred[0].mesh[14][1], facePred[0].mesh[14][2]
+      );
+    }
   });
   
   video.hide();
@@ -115,18 +118,8 @@ function draw() {
 
   blendMode(BLEND);
   background(255);
-  push();
 
-  pop();
-
-  for(let i = 0;i<particles.length;i++) {
-    particles[i].createParticle();
-    if (dist(mouthX, mouthY, particles[i].x, particles[i].y) < 50 && mouthIsOpen()) {
-      selectedWords.push(particles[i].word);
-      particles.splice(i,1)
-    }
-    particles[i].moveParticle();
-  }
+    //words
     push();
     scale(-1, 1); //flip webcam again
     fill('black');
@@ -135,19 +128,29 @@ function draw() {
     text(selectedWords.join(' '),-windowWidth/2+40,-windowHeight/2+40, windowWidth-80,windowHeight-80);
     pop();
 
+    //ellipse
+    push();
+    stroke(0)
+    fill('rgba(255,255,255)');
+    ellipse(mouthX-windowWidth/2, mouthY-windowHeight/2, 100);
+    pop();
 
-  //lips
-  push();
-  
-  drawBox('black','lipsUpperOuter', 'rgba(255,255,255, 0.05)');
-  drawBox('black','lipsLowerOuter', 'rgba(255,255,255, 0.05)');
-  drawBox('black','lipsUpperInner', 'rgba(255,255,255, 0.05)');
-  drawBox('black','lipsLowerInner', 'rgba(255,255,255, 0.05)');
-  stroke(0)
-  // fill('rgba(0,0,0, 0.1)');
-  ellipse(mouthX-windowWidth/2, mouthY-windowHeight/2, 100);
-  pop();
+    //particles
+    for(let i = 0;i<particles.length;i++) {
+      particles[i].createParticle();
+      if (dist(mouthX, mouthY, particles[i].x, particles[i].y) < 50 && mouthIsOpen()) {
+        selectedWords.push(particles[i].word);
+        particles.splice(i,1)
+      }
+      particles[i].moveParticle();
+    }
 
+        
+    //lips
+    drawBox('black','lipsUpperOuter', 'rgba(255,255,255, 0.05)');
+    drawBox('black','lipsLowerOuter', 'rgba(255,255,255, 0.05)');
+    drawBox('black','lipsUpperInner', 'rgba(255,255,255, 0.05)');
+    drawBox('black','lipsLowerInner', 'rgba(255,255,255, 0.05)');
 }
 
 function drawBox(color = 'black', area, fillColor, size = 4) {
