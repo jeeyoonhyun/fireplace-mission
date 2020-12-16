@@ -47,7 +47,7 @@ class Particle {
         textAlign(CENTER, CENTER);
         fill('black');
         textSize(14 + this.r/2);
-        textFont(font);
+        textFont(fontSans);
         text(this.word,0,12);
       }
       pop();
@@ -74,7 +74,9 @@ const mesh = {
 };
 
 function preload() {
-  font = loadFont('./OpenSans.ttf');
+  fontSans = loadFont('./OpenSans.ttf');
+  fontMilli = loadFont('./Millimetre-Extrablack_web.otf');
+  fontPixel = loadFont('./Mister_Pixel_Regular.otf');
 }
 
 function setup() {
@@ -123,7 +125,7 @@ function draw() {
     push();
     scale(-1, 1); //flip webcam again
     fill('black');
-    textFont(font);
+    textFont(fontPixel);
     textSize(60);
     text(selectedWords.join(' '),-windowWidth/2+40,-windowHeight/2+40, windowWidth-80,windowHeight-80);
     pop();
