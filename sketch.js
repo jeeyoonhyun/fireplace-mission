@@ -89,11 +89,7 @@ function setup() {
   facemesh = ml5.facemesh(video, modelReady);
   facemesh.on("predict", results => {
     facePred = results;  
-    // coordinates of upper lip center and lower lip center
-    [x_13, y_13, z_13] = [facePred[0].mesh[13][0], facePred[0].mesh[13][1], facePred[0].mesh[13][2]];
-    [x_14, y_14, z_14] = [facePred[0].mesh[14][0], facePred[0].mesh[14][1], facePred[0].mesh[14][2]];
   });
-
   
   video.hide();
   
