@@ -8,7 +8,7 @@ let font;
 let wordlist = ["f", "he", "described", "a", "simple", "app", "for", "posting", "and", "viewing", "photos", "as", "a", "user", "would", "on", "nstagram", "the", "system", "generated", "the", "code", "needed", "to", "build", "it", "his", "code", "was", "sometimes", "flawed", "ut", "typically", "if", "r", "inger", "made", "just", "a", "tweak", "or", "two", "it", "worked", "as", "he", "wanted", "ts", "not", "absolutely", "perfect", "he", "said", "ut", "it", "is", "very", "very", "close"];
 let selectedWords = [];
 let mouthX, mouthY;
-let x_13, y_13, z_13, x_14, y_14, z_14;
+let mouthDistance;
 
 // particles
 class Particle {
@@ -89,6 +89,10 @@ function setup() {
   facemesh = ml5.facemesh(video, modelReady);
   facemesh.on("predict", results => {
     facePred = results;  
+    mouthDistance = dist(
+      facePred[0].mesh[13][0], facePred[0].mesh[13][1], facePred[0].mesh[13][2],
+      facePred[0].mesh[14][0], facePred[0].mesh[14][1], facePred[0].mesh[14][2]
+    );
   });
   
   video.hide();
@@ -117,10 +121,9 @@ function draw() {
 
   for(let i = 0;i<particles.length;i++) {
     particles[i].createParticle();
-    if (dist(mouthX, mouthY, particles[i].x, particles[i].y) < 50 && mouseIsPressed) {
+    if (dist(mouthX, mouthY, particles[i].x, particles[i].y) < 50 && mouthIsOpen()) {
       selectedWords.push(particles[i].word);
       particles.splice(i,1)
-      
     }
     particles[i].moveParticle();
   }
@@ -140,8 +143,8 @@ function draw() {
   drawBox('black','lipsLowerOuter', 'rgba(255,255,255, 0.05)');
   drawBox('black','lipsUpperInner', 'rgba(255,255,255, 0.05)');
   drawBox('black','lipsLowerInner', 'rgba(255,255,255, 0.05)');
-  noStroke();
-  fill('rgba(0,0,0, 0.1)');
+  stroke(0)
+  // fill('rgba(0,0,0, 0.1)');
   ellipse(mouthX-windowWidth/2, mouthY-windowHeight/2, 100);
   pop();
 
@@ -166,11 +169,9 @@ function drawBox(color = 'black', area, fillColor, size = 4) {
   }
 }
 
-
-// calculate distance between points 13 and 14 (center of mouth)
+// calculate distance between points 13 and 14 (center of mouth)s
 function mouthIsOpen() {
-
-  if (dist(x_13,y_13,z_13, x_14,y_14,z_14)> 5) {
+  if (mouthDistance > 5) {
     return true;
   } else {
     return false;
