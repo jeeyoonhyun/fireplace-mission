@@ -75,7 +75,6 @@ const mesh = {
 
 function preload() {
   fontSans = loadFont('./OpenSans.ttf');
-  fontMilli = loadFont('./Millimetre-Extrablack_web.otf');
   fontPixel = loadFont('./Mister_Pixel_Regular.otf');
 }
 
