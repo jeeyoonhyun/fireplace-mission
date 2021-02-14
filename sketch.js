@@ -30,9 +30,8 @@ class Particle {
   // creation of a particle.
     createParticle() {
       stroke('black');
-      
       push();
-      translate(this.x-windowWidth/2,this.y-windowHeight/2);
+      translate(-this.x+windowWidth/2,this.y-windowHeight/2);
       if (dist(handX, handY, this.x, this.y) < 50) {
         fill('black');
         stroke('white');
@@ -45,7 +44,7 @@ class Particle {
       pop();
 
       push();
-      translate(this.x-windowWidth/2,this.y-windowHeight/2);
+      translate(-this.x+windowWidth/2,this.y-windowHeight/2);
       if (dist(handX, handY, this.x, this.y) < 50) {
         textAlign(CENTER, CENTER);
         fill('black');
@@ -142,10 +141,10 @@ function draw() {
   push();
   scale(-1, 1);
   stroke(0)
-  fill('rgba(255,255,255)');
-  ellipse(handX-windowWidth/2, handY-windowHeight/2, 100);
+  noFill();
+  // ellipse(handX-windowWidth/2, handY-windowHeight/2, 100);
   if (predictions[0]) {
-    rect(predictions[0].boundingBox.topLeft[0],predictions[0].boundingBox.topLeft[1],predictions[0].boundingBox.bottomRight[0]-predictions[0].boundingBox.topLeft[0], predictions[0].boundingBox.bottomRight[1]-predictions[0].boundingBox.topLeft[1]);
+    rect(predictions[0].boundingBox.topLeft[0]-windowWidth/2,predictions[0].boundingBox.topLeft[1]-windowHeight/2,predictions[0].boundingBox.bottomRight[0]-predictions[0].boundingBox.topLeft[0], predictions[0].boundingBox.bottomRight[1]-predictions[0].boundingBox.topLeft[1]);
   }
   
   pop();
