@@ -45,7 +45,7 @@ class Particle {
 
       push();
       translate(-this.x+windowWidth/2,this.y-windowHeight/2);
-      if (dist(handX, handY, this.x, this.y) < 50) {
+      if (dist(handX, handY, this.x, this.y) < 100) {
         textAlign(CENTER, CENTER);
         fill('black');
         textSize(14 + this.r/2);
