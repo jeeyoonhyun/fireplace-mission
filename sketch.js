@@ -108,7 +108,7 @@ function setup() {
   canvas.position(0,0);
   canvas.style('z-index','-1')
   
-  for(let i = 0;i<width/10;i++){
+  for(let i = 0;i<width/20;i++){
     particles.push(new Particle());
   }
 }
@@ -152,7 +152,7 @@ function draw() {
   //particles - hand
   for(let i = 0;i<particles.length;i++) {
     particles[i].createParticle();
-    if (dist(handX, handY, particles[i].x, particles[i].y) < 50 && !handIsOpen()) {
+    if (dist(handX, handY, particles[i].x, particles[i].y) < 80 && !handIsOpen()) {
       selectedWords.push(particles[i].word);
       particles.splice(i,1)
     }
@@ -189,7 +189,7 @@ function drawKeypoints() {
 
 // calculate distance between points 13 and 14 (center of mouth)s
 function handIsOpen() {
-  if (handDistance > 50) { // modify distance for testing
+  if (handDistance > 80) { // modify distance for testing
     return true;
   } else {
     return false;
