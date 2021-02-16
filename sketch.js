@@ -197,7 +197,7 @@ function draw() {
   drawKeypoints();
   pop();
 }
-
+ 
 //draw handpose keypoints
 function drawKeypoints() {
   for (let i = 0; i < predictions.length; i += 1) {
