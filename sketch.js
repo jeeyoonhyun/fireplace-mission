@@ -103,7 +103,7 @@ function preload() {
 }
 
 function setup() {
-  frameRate(30);
+  frameRate(24);
   video = createCapture(VIDEO);
   video.size(w, h);
   handpose = ml5.handpose(video, modelReady);
@@ -129,7 +129,7 @@ function setup() {
   canvas.position(0,0);
   canvas.style('z-index','-1')
   
-  for(let i = 0;i<width/20;i++){
+  for(let i = 0;i<w/30;i++){
     particles.push(new Particle());
   }
 }
