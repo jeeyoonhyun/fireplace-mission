@@ -6,6 +6,10 @@ p {
 
 }
 
+body {
+    margin: 0 auto;
+}
+
 .credit {
     position:absolute;
     left:10;

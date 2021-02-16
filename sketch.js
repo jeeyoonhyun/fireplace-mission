@@ -205,14 +205,15 @@ function drawKeypoints() {
     for (let j = 0; j < prediction.landmarks.length; j += 1) {
       const keypoint = prediction.landmarks[j];
       push();
-      noStroke();
+      stroke('rgb(150,150,150)');
       scale(-1, 1); //flip webcam
-      if (j == 4 || j == 8) {
-        fill('red');
-      }else {
-        fill('black');
-      }
-      ellipse(keypoint[0], keypoint[1], r, r);
+      fill('rgba(220,220,220,0.8)');
+      // if (j == 4 || j == 8) {
+      //   fill('red');
+      // }else {
+      //   fill('black');
+      // }
+      rect(keypoint[0], keypoint[1], r, r);
       pop();
     }
   }
