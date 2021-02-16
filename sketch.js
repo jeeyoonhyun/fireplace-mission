@@ -165,7 +165,7 @@ function draw() {
   noFill();
   // ellipse(handX-w/2, handY-h/2, 100);
   if (predictions[0]) {
-    rect(predictions[0].boundingBox.topLeft[0]-w/2,predictions[0].boundingBox.topLeft[1]-h/2,predictions[0].boundingBox.bottomRight[0]-predictions[0].boundingBox.topLeft[0], predictions[0].boundingBox.bottomRight[1]-predictions[0].boundingBox.topLeft[1]);
+    // rect(predictions[0].boundingBox.topLeft[0]-w/2,predictions[0].boundingBox.topLeft[1]-h/2,predictions[0].boundingBox.bottomRight[0]-predictions[0].boundingBox.topLeft[0], predictions[0].boundingBox.bottomRight[1]-predictions[0].boundingBox.topLeft[1]);
   }
   
   pop();
