@@ -24,7 +24,7 @@ let cube = w/50;
 //handpose
 let handpose;
 let predictions = [];
-let r = w/60;
+let r = w/120;
 let threshold = w/5;
 
 // text
