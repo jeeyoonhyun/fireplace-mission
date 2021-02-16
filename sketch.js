@@ -103,6 +103,7 @@ function preload() {
 }
 
 function setup() {
+  frameRate(30);
   video = createCapture(VIDEO);
   video.size(w, h);
   handpose = ml5.handpose(video, modelReady);
