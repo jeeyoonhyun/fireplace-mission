@@ -1,23 +1,40 @@
-let facemesh;
+//mobile/PC resolution (not for installation)
+
 let video;
-let facePred = [];
-let handPred = [];
-let areaPoints = [];
 let particles = [];
 let fontSans, fontPixel;
-let wordlist = ["after", "months", "of", "stalemate", "congressional", "leaders", "were", "on", "the", "verge", "on", "wednesday", "of", "cementing", "a", "roughly", "$900", "billion", "stimulus", "deal", "to", "deliver", "emergency", "aid", "to", "individuals", "and", "companies", "devastated", "by", "the", "toll", "of", "the", "worsening", "pandemic", "racing", "to", "finish", "the", "details", "and", "stave", "off", "a", "government", "shutdown", "on", "friday", "the", "measure", "which", "has", "been", "under", "discussion", "for", "months", "as", "the", "coronavirus", "has", "ravaged", "the", "economy", "is", "expected", "provide", "a", "new", "round", "of", "direct", "payments", "to", "millions", "of", "americans", "as", "well", "as", "additional", "unemployment", "benefits", "food", "assistance", "and", "rental", "aid", "it", "would", "prop", "up", "sputtering", "businesses", "with", "federally", "backed", "loans", "and", "provide", "funding", "for", "schools", "hospitals", "and", "the", "distribution", "of", "a", "justapproved", "vaccine", "while", "the", "agreement", "was", "not", "yet", "final", "republicans", "and", "democrats", "alike", "signaled", "that", "they", "were", "ready", "to", "coalesce", "around", "the", "main", "elements", "marking", "an", "extraordinary", "shift", "from", "just", "weeks", "ago", "when", "both", "sides", "were", "issuing", "ultimatums", "and", "refusing", "to", "budge", "from", "longheld", "positions", "the", "momentum", "indicated", "that", "relief", "could", "soon", "be", "on", "its", "way", "for", "individuals", "and", "businesses", "who", "have", "waited", "for", "months", "as", "economists", "have", "clamored", "for", "another", "robust", "infusion", "of", "federal", "aid", "warning", "that", "congress’s", "failure", "to", "act", "could", "do", "longlasting", "damage", "“we’re", "making", "good", "progress”", "said", "senator", "chuck", "schumer", "of", "new", "york", "the", "democratic", "leader", "in", "a", "brief", "interview", "on", "wednesday", "afternoon", "as", "staff", "exchanged", "offers", "and", "counteroffers", "“no", "one", "gets", "everything", "they", "want", "but", "we’re", "feeling", "pretty", "good”", "but", "even", "as", "lawmakers", "moved", "toward", "striking", "an", "elusive", "deal", "the", "package", "pointed", "to", "troubles", "on", "the", "horizon", "for", "presidentelect", "joseph", "r", "biden", "jr", "who", "had", "pressed", "for", "at", "least", "some", "compromise", "on", "emergency", "pandemic", "aid", "before", "year’s", "end", "to", "break", "the", "logjam", "democrats", "appeared", "to", "have", "dropped", "their", "demand", "for", "a", "dedicated", "funding", "stream", "for", "states", "and", "cities", "that", "are", "facing", "fiscal", "ruin", "guaranteeing", "that", "mr", "biden", "will", "have", "to", "act", "early", "in", "his", "tenure", "to", "try", "to", "bolster", "them", "and", "take", "additional", "action", "to", "prop", "up", "the", "economy", "“the", "stimulus", "package", "is", "encouraging”", "mr", "biden", "said", "wednesday", "at", "an", "event", "in", "wilmington", "del", "“but", "it’s", "a", "down", "payment", "—", "an", "important", "down", "payment", "on", "what’s", "going", "to", "have", "to", "be", "done", "beginning", "the", "end", "of", "january", "into", "february", "but", "it’s", "very", "important", "to", "get", "done”", "for", "months", "democrats", "and", "republicans", "had", "been", "unwilling", "to", "compromise", "amid", "a", "toxic", "presidential", "election", "democrats", "who", "initially", "pushed", "a", "$34", "trillion", "plan", "held", "out", "for", "a", "much", "broader", "package", "than", "republicans", "were", "willing", "to", "consider", "in", "the", "runup", "to", "the", "november", "election", "judging", "that", "president", "trump", "and", "his", "party", "would", "pay", "a", "political", "price", "for", "failing", "to", "agree", "to", "a", "generous", "new", "batch", "of", "aid", "republicans", "for", "their", "part", "were", "wary", "of", "any", "new", "federal", "spending", "and", "insisted", "on", "a", "much", "narrower", "plan", "that", "would", "extend", "sweeping", "coronavirus", "liability", "protections", "they", "appeared", "to", "have", "put", "that", "demand", "aside", "in", "recent", "days", "in", "exchange", "for", "democrats", "backing", "off", "their", "insistence", "on", "a", "large", "new", "infusion", "of", "state", "and", "local", "assistance", "two", "officials", "familiar", "with", "the", "talks", "said", "there", "were", "other", "avenues", "to", "potentially", "provide", "the", "aid", "how", "to", "handle", "bad", "coworkers", "of", "the", "antimask", "and", "boyfriend", "varieties", "but", "the", "political", "calculus", "changed", "after", "the", "election", "mr", "biden", "and", "his", "advisers", "began", "quietly", "pressing", "for", "democrats", "to", "strike", "a", "deal", "—", "even", "a", "scaleddown", "one", "—", "and", "senator", "mitch", "mcconnell", "republican", "of", "kentucky", "and", "the", "majority", "leader", "had", "powerful", "reasons", "of", "his", "own", "to", "compromise", "on", "wednesday", "he", "suggested", "on", "a", "private", "call", "with", "republicans", "that", "delivering", "the", "stimulus", "package", "could", "bolster", "the", "party’s", "hopes", "of", "hanging", "onto", "its", "majority", "in", "the", "senate", "according", "to", "three", "people", "who", "relayed", "his", "comments", "on", "the", "condition", "of", "anonymity", "mr", "mcconnell", "said", "that", "senators", "kelly", "loeffler", "and", "david", "perdue", "who", "are", "both", "facing", "runoffs", "in", "january", "that", "will", "determine", "which", "party", "controls", "the", "senate", "were", "“getting", "hammered”", "for", "congress’s", "failure", "to", "deliver", "more", "pandemic", "aid", "to", "struggling", "americans", "—", "particularly", "the", "direct", "payments", "—", "and", "that", "enacting", "the", "measure", "could", "help", "them", "the", "majority", "leader", "also", "emphasized", "that", "the", "package", "could", "be", "signed", "by", "mr", "trump", "who", "has", "pushed", "for", "another", "round", "of", "stimulus", "checks", "even", "as", "enthusiasm", "built", "that", "the", "longstalled", "stimulus", "talks", "were", "finally", "bearing", "fruit", "it", "was", "clear", "that", "the", "potential", "agreement", "was", "far", "smaller", "than", "what", "economists", "say", "is", "needed", "the", "plan", "under", "discussion", "amounts", "to", "less", "than", "half", "of", "the", "$22", "trillion", "stimulus", "law", "enacted", "in", "march", "and", "it", "does", "not", "come", "close", "to", "matching", "what", "many", "economists", "had", "said", "would", "be", "necessary", "to", "jolt", "the", "economy", "out", "of", "a", "pandemicinduced", "slump", "they", "have", "warned", "for", "months", "about", "permanent", "economic", "damage", "and", "deteriorating", "prospects", "for", "a", "swift", "recovery", "offering", "a", "grim", "backdrop", "as", "lawmakers", "traded", "blame", "jerome", "h", "powell", "the", "chair", "of", "the", "federal", "reserve", "reiterated", "his", "call", "for", "more", "fiscal", "stimulus", "on", "wednesday", "saying", "that", "the", "continuing", "rise", "in", "covid19", "cases", "and", "the", "lapse", "in", "funding", "for", "several", "programs", "that", "were", "helping", "households", "and", "businesses", "stay", "afloat", "posed", "challenges", "for", "the", "economy", "“the", "case", "for", "fiscal", "policy", "right", "now", "is", "very", "very", "strong", "and", "i", "think", "that’s", "widely", "understood", "right", "now”", "he", "said", "“now", "that", "we", "can", "kind", "of", "see", "the", "light", "at", "the", "end", "of", "the", "tunnel", "it", "would", "be", "bad", "to", "see", "people", "losing", "their", "business", "their", "life’s", "work", "even", "generations’", "worth", "of", "work”", "even", "as", "negotiations", "continued", "there", "was", "evidence", "of", "economic", "harm", "the", "worsening", "pandemic", "was", "causing", "retail", "sales", "fell", "11", "percent", "in", "november", "the", "commerce", "department", "reported", "with", "restaurants", "and", "bars", "experiencing", "even", "bigger", "declines", "as", "states", "reimposed", "business", "restrictions", "other", "measures", "of", "economic", "activity", "have", "likewise", "slowed", "in", "recent", "weeks", "and", "applications", "for", "unemployment", "benefits", "have", "surged", "for", "the", "millions", "of", "americans", "already", "relying", "on", "jobless", "benefits", "the", "situation", "could", "be", "even", "more", "dire", "if", "two", "programs", "that", "expand", "and", "extend", "the", "unemployment", "insurance", "system", "expire", "after", "next", "week", "without", "congressional", "action", "republicans", "have", "continued", "to", "insist", "that", "a", "package", "should", "remain", "under", "$1", "trillion", "in", "order", "to", "maintain", "support", "within", "their", "ranks", "leaving", "lawmakers", "and", "staff", "to", "wrangle", "over", "funding", "levels", "for", "various", "provisions", "and", "programs", "in", "the", "new", "measure", "speaker", "nancy", "pelosi", "of", "california", "and", "mr", "schumer", "spoke", "with", "steven", "mnuchin", "the", "treasury", "secretary", "for", "about", "45", "minutes", "on", "wednesday", "as", "they", "worked", "to", "hammer", "out", "final", "details", "the", "measure", "which", "builds", "off", "a", "$748", "billion", "bill", "proposed", "by", "a", "bipartisan", "group", "of", "moderates", "this", "week", "is", "expected", "to", "include", "$25", "billion", "to", "establish", "a", "program", "that", "would", "provide", "emergency", "rental", "assistance", "to", "families", "affected", "by", "the", "pandemic", "as", "well", "as", "billions", "for", "vaccine", "development", "and", "distribution", "broadband", "and", "schools", "across", "the", "country", "negotiators", "were", "still", "discussing", "the", "possible", "inclusion", "of", "house", "legislation", "that", "provides", "funds", "to", "distribute", "to", "states", "and", "cities", "and", "to", "fully", "cover", "the", "costs", "of", "emergency", "work", "during", "the", "pandemic", "they", "were", "also", "still", "haggling", "over", "an", "expansion", "and", "extension", "of", "unemployment", "benefits", "and", "how", "long", "they", "would", "last", "the", "agreement", "is", "expected", "to", "revive", "lapsed", "enhanced", "unemployment", "benefits", "at", "about", "$300", "a", "week", "half", "of", "the", "original", "benefit", "approved", "in", "march", "which", "lapsed", "over", "the", "summer", "but", "republicans", "were", "insisting", "on", "curtailing", "the", "number", "of", "weeks", "of", "benefits", "to", "help", "offset", "the", "cost", "of", "providing", "stimulus", "payments", "in", "addition", "to", "the", "jobless", "aid", "the", "plan", "would", "provide", "a", "onetime", "direct", "payment", "to", "americans", "expected", "to", "be", "about", "$600", "per", "person", "also", "half", "the", "amount", "provided", "under", "the", "march", "stimulus", "law", "senator", "bernie", "sanders", "independent", "of", "vermont", "who", "has", "been", "vocal", "about", "his", "belief", "that", "democrats", "succumbed", "too", "easily", "to", "republican", "demands", "and", "senator", "joe", "manchin", "iii", "democrat", "of", "west", "virginia", "a", "leader", "of", "the", "bipartisan", "group", "got", "into", "a", "heated", "exchange", "on", "a", "private", "democratic", "caucus", "call", "over", "progressives’", "push", "to", "increase", "the", "amount", "of", "the", "direct", "payments", "according", "to", "three", "people", "familiar", "with", "the", "discussion", "“it", "will", "be", "a", "progressive", "holding", "their", "nose", "and", "voting", "for", "something", "because", "we", "don’t", "want", "to", "take", "away", "$600", "from", "american", "families", "before", "christmas", "and", "we", "don’t", "want", "to", "take", "unemployment", "benefits", "away", "from", "people”", "said", "representative", "ro", "khanna", "democrat", "of", "california", "the", "measure", "is", "likely", "to", "advance", "as", "part", "of", "a", "catchall", "spending", "package", "that", "will", "include", "the", "dozen", "annual", "bills", "needed", "to", "fund", "the", "government", "through", "the", "end", "of", "the", "fiscal", "year", "among", "the", "unresolved", "issues", "was", "whether", "to", "include", "a", "bipartisan", "bicameral", "agreement", "on", "legislation", "that", "would", "end", "the", "practice", "of", "surprise", "medical", "billing", "“i’m", "cautiously", "optimistic", "that", "maybe", "we", "will", "be", "able", "to", "finish", "up", "by", "the", "end", "of", "this", "week”", "said", "senator", "susan", "collins", "republican", "of", "maine", "and", "one", "of", "the", "key", "lawmakers", "involved", "in", "drafting", "the", "bipartisan", "proposal", "but", "mr", "mcconnell", "warned", "republicans", "in", "the", "private", "conference", "call", "to", "prepare", "to", "remain", "in", "washington", "through", "the", "weekend", "as", "lawmakers", "and", "aides", "finish", "the", "details", "and", "write", "legislative", "text"]
+
+
+
+let handX, handY;
+let handDistance;
+
+//resolution related
+let s = 1.5;
+let cube;
+
+//handpose
+let handpose;
+let predictions = [];
+let r;
+let threshold;
+
+// text
+let maxwords = 150;
+
+// https://editor.p5js.org/jeeyoonhyun/sketches/NW40RMjGO
+let wordlist = ["federal", "health", "officials", "warned", "impatient", "governors", "on", "friday", "against", "relaxing", "pandemic", "control", "measures", "saying", "that", "a", "recent", "steep", "drop", "in", "coronavirus", "cases", "and", "deaths", "in", "the", "united", "states", "may", "be", "leveling", "off", "at", "a", "very", "high", "number", "—", "a", "shift", "that", "the", "director", "of", "the", "centers", "for", "disease", "control", "and", "prevention", "said", "“must", "be", "taken", "extremely", "seriously”", "the", "pleas", "from", "the", "director", "dr", "rochelle", "walensky", "and", "dr", "anthony", "s", "fauci", "president", "biden’s", "chief", "medical", "adviser", "for", "the", "virus", "came", "as", "the", "biden", "administration", "scrambled", "to", "stay", "ahead", "of", "a", "possible", "fourth", "surge", "of", "infections", "and", "the", "spread", "of", "worrisome", "variants", "which", "officials", "say", "account", "for", "a", "rising", "percentage", "of", "cases", "in", "the", "country", "those", "calls", "punctuated", "a", "fastpaced", "day", "of", "pandemicrelated", "developments", "around", "the", "country", "mr", "biden", "flew", "to", "houston", "to", "showcase", "the", "government’s", "latest", "mass", "vaccination", "site", "the", "food", "and", "drug", "administration", "neared", "emergency", "authorization", "of", "a", "third", "coronavirus", "vaccine", "this", "one", "from", "johnson", "&", "johnson", "and", "the", "white", "house", "enlisted", "business", "groups", "to", "help", "vaccinate", "their", "employees", "and", "reach", "americans", "resisting", "vaccinations", "behind", "it", "all", "were", "ominous", "signs", "after", "weeks", "of", "positive", "developments", "“things", "are", "tenuous”", "dr", "walensky", "said", "at", "a", "white", "house", "briefing", "on", "the", "pandemic", "“now", "is", "not", "the", "time", "to", "relax", "restrictions”", "according", "to", "a", "new", "york", "times", "database", "virus", "cases", "across", "the", "united", "states", "appear", "to", "be", "leveling", "off", "from", "the", "steep", "decline", "that", "began", "in", "january", "with", "figures", "comparable", "with", "those", "reported", "in", "late", "october", "the", "sevenday", "average", "of", "new", "cases", "was", "69450", "as", "of", "thursday", "cases", "have", "slightly", "increased", "week", "over", "week", "in", "recent", "days", "though", "severe", "weather", "limited", "testing", "and", "reporting", "in", "texas", "and", "other", "states", "the", "previous", "week", "and", "not", "all", "states", "reported", "complete", "data", "on", "the", "presidents’", "day", "holiday", "still", "the", "overall", "numbers", "remain", "horrific", "more", "than", "half", "a", "million", "americans", "are", "now", "dead", "of", "covid19", "and", "as", "of", "friday", "more", "than", "28", "million", "have", "been", "infected", "yet", "governors", "were", "chafing", "against", "coronavirusrelated", "restrictions", "and", "itching", "to", "take", "steps", "to", "restore", "a", "sense", "of", "normalcy", "in", "a", "sign", "that", "the", "partisan", "divide", "over", "the", "pandemic", "has", "not", "yet", "abated", "republicans", "seemed", "more", "eager", "to", "roll", "back", "virus", "control", "measures", "than", "democrats", "though", "in", "new", "york", "gov", "andrew", "m", "cuomo", "a", "democrat", "has", "also", "been", "easing", "restrictions", "on", "a", "variety", "of", "activities", "“there’s", "nothing", "partisan", "about", "this", "virus”", "president", "biden", "said", "speaking", "at", "a", "mass", "vaccination", "site", "in", "houston", "with", "texas’", "republican", "governor", "greg", "abbott", "and", "one", "of", "its", "republican", "senators", "john", "cornyn", "yet", "in", "texas", "mr", "abbott", "is", "considering", "lifting", "a", "statewide", "mask", "mandate", "in", "place", "since", "july", "in", "south", "carolina", "which", "has", "been", "struggling", "with", "some", "of", "the", "highest", "infection", "rates", "in", "the", "country", "gov", "henry", "mcmaster", "a", "republican", "announced", "that", "on", "monday", "restaurants", "would", "once", "again", "be", "able", "to", "serve", "alcohol", "past", "11", "pm", "and", "that", "residents", "no", "longer", "needed", "to", "get", "approval", "from", "the", "state", "to", "hold", "events", "with", "250", "people", "or", "more", "the", "move", "lifts", "orders", "imposed", "by", "the", "state", "last", "year", "in", "mississippi", "gov", "tate", "reeves", "said", "thursday", "that", "he", "was", "also", "considering", "pulling", "back", "some", "restrictions", "particularly", "mask", "mandates", "for", "people", "who", "have", "been", "fully", "vaccinated", "both", "are", "republicans", "and", "in", "florida", "republicans", "who", "gathered", "for", "the", "first", "full", "day", "of", "the", "conservative", "political", "action", "committee’s", "annual", "conference", "in", "orlando", "mocked", "coronavirus", "restrictions", "the", "hosting", "hotel", "required", "attendees", "to", "wear", "masks", "indoors", "but", "the", "conference", "had", "been", "underway", "less", "than", "two", "hours", "on", "friday", "before", "the", "requirement", "caused", "a", "scene", "shortly", "after", "josh", "mandel", "an", "ohio", "republican", "closed", "his", "speech", "with", "chants", "of", "“freedom”", "two", "conference", "officials", "walked", "quietly", "onstage", "to", "pause", "the", "event", "pleading", "with", "the", "audience", "to", "wear", "their", "masks", "the", "audience", "erupted", "in", "boos", "and", "jeers", "senator", "ted", "cruz", "republican", "of", "texas", "then", "made", "fun", "of", "pandemic", "rules", "like", "wearing", "masks", "in", "restaurants", "here", "in", "washington", "biden", "administration", "officials", "pleaded", "with", "americans", "to", "be", "patient", "dr", "fauci", "echoed", "dr", "walensky’s", "warnings", "that", "more", "rollbacks", "at", "state", "or", "local", "levels", "would", "be", "unwise", "noting", "that", "with", "coronavirus", "cases", "still", "hovering", "at", "around", "70000", "per", "day", "the", "country", "remains", "in", "a", "“very", "precarious", "position”", "“we", "don’t", "want", "to", "be", "people", "always", "looking", "at", "the", "dark", "side", "of", "things", "but", "you", "want", "to", "be", "realistic”", "he", "said", "“so", "we", "have", "to", "carefully", "look", "at", "what", "happens", "over", "the", "next", "week", "or", "so", "with", "those", "numbers", "before", "you", "start", "making", "the", "understandable", "need", "to", "relax", "on", "certain", "restrictions”", "while", "coronavirus", "deaths", "tend", "to", "fluctuate", "more", "than", "cases", "and", "hospital", "admissions", "dr", "walensky", "said", "the", "most", "recent", "sevenday", "average", "was", "slightly", "higher", "than", "the", "average", "earlier", "in", "the", "week", "the", "sevenday", "average", "of", "newly", "reported", "deaths", "was", "2165", "as", "of", "thursday", "“we", "at", "cdc", "consider", "this", "a", "very", "concerning", "shift", "in", "the", "trajectory”", "she", "said", "adding", "“i", "want", "to", "be", "clear", "cases", "hospital", "admissions", "and", "deaths", "—", "all", "remain", "very", "high", "and", "the", "recent", "shift", "in", "the", "pandemic", "must", "be", "taken", "extremely", "seriously”", "dr", "walensky", "said", "some", "of", "the", "rise", "may", "be", "attributable", "to", "new", "variants", "of", "the", "coronavirus", "that", "spread", "more", "efficiently", "and", "quickly", "the", "socalled", "b117", "variant", "which", "first", "emerged", "in", "britain", "now", "accounts", "for", "approximately", "10", "percent", "of", "all", "cases", "in", "the", "united", "states", "up", "from", "1", "percent", "to", "4", "percent", "a", "few", "weeks", "ago", "she", "said", "the", "united", "states’", "ability", "to", "track", "variants", "is", "much", "less", "robust", "than", "britain’s", "even", "so", "data", "gathered", "by", "the", "cdc", "shows", "the", "number", "of", "cases", "with", "the", "variant", "in", "the", "country", "has", "risen", "from", "76", "in", "12", "states", "as", "of", "jan", "13", "to", "more", "than", "2100", "in", "45", "states", "as", "of", "thursday", "but", "the", "actual", "infections", "may", "be", "much", "higher", "because", "of", "inadequate", "surveillance", "efforts", "“i", "know", "people", "are", "tired", "they", "want", "to", "get", "back", "to", "life", "to", "normal”", "dr", "walensky", "said", "“but", "we’re", "not", "there", "yet”", "dr", "walensky’s", "strong", "and", "vocal", "warnings", "made", "clear", "that", "in", "the", "biden", "administration", "unlike", "the", "trump", "administration", "the", "cdc", "director", "was", "being", "given", "a", "powerful", "voice", "under", "president", "donald", "j", "trump", "the", "agency", "was", "all", "but", "silenced", "after", "one", "of", "its", "top", "officials", "dr", "nancy", "messonnier", "told", "reporters", "almost", "exactly", "a", "year", "ago", "that", "the", "coronavirus", "would", "cause", "severe", "disruptions", "to", "american", "life", "at", "the", "same", "time", "administration", "officials", "tried", "to", "spotlight", "their", "efforts", "to", "guide", "the", "nation", "out", "of", "the", "pandemic", "including", "ramping", "up", "the", "national", "coronavirus", "vaccination", "campaign", "acquiring", "new", "therapeutics", "and", "drawing", "the", "private", "sector", "into", "the", "fight", "in", "houston", "mr", "biden", "echoed", "the", "warnings", "coming", "from", "his", "team", "“cases", "and", "hospitalizations", "could", "go", "back", "up", "as", "new", "variants", "emerge”", "he", "said", "“and", "it’s", "not", "the", "time", "to", "relax”", "about", "an", "hour", "before", "mr", "biden", "was", "to", "speak", "in", "houston", "a", "panel", "of", "expert", "advisers", "to", "the", "food", "and", "drug", "administration", "voted", "unanimously", "to", "give", "the", "green", "light", "to", "johnson", "&", "johnson’s", "covid19", "vaccine", "clearing", "the", "last", "hurdle", "before", "a", "formal", "emergency", "authorization", "expected", "on", "saturday", "the", "vaccine", "will", "join", "two", "others", "one", "by", "moderna", "and", "the", "other", "by", "pfizerbiontech", "that", "are", "authorized", "for", "use", "in", "the", "united", "states", "but", "unlike", "the", "first", "two", "johnson", "&", "johnson’s", "vaccine", "takes", "only", "one", "dose", "and", "has", "fewer", "shipping", "and", "handling", "difficulties", "earlier", "on", "friday", "the", "biden", "administration", "announced", "it", "has", "purchased", "100000", "doses", "of", "a", "recently", "authorized", "covid19", "treatment", "from", "eli", "lilly", "increasing", "the", "supply", "of", "such", "drugs", "for", "patients", "who", "are", "at", "high", "risk", "of", "becoming", "seriously", "ill", "but", "are", "not", "yet", "hospitalized", "the", "treatment", "is", "a", "cocktail", "of", "monoclonal", "antibodies", "the", "government", "will", "pay", "$210", "million", "for", "an", "initial", "tranche", "of", "100000", "doses", "which", "the", "company", "will", "ship", "by", "the", "end", "of", "march", "the", "administration", "has", "an", "option", "to", "buy", "an", "additional", "11", "million", "more", "doses", "through", "november", "if", "necessary", "mr", "biden", "has", "often", "compared", "the", "fight", "against", "the", "coronavirus", "to", "wartime", "mobilization", "but", "with", "the", "exception", "of", "pharmaceutical", "companies", "the", "private", "sector", "has", "done", "relatively", "little", "in", "the", "effort", "it", "has", "not", "made", "a", "major", "push", "to", "persuade", "americans", "to", "remain", "socially", "distant", "wear", "masks", "or", "get", "vaccinated", "as", "soon", "as", "possible", "the", "administration", "said", "friday", "that", "it", "was", "trying", "to", "change", "that", "by", "joining", "with", "business", "lobbying", "groups", "including", "the", "us", "chamber", "of", "commerce", "national", "association", "of", "manufacturers", "and", "the", "business", "roundtable", "to", "encourage", "companies", "to", "support", "workers", "in", "getting", "vaccinated", "by", "offering", "paid", "time", "off", "or", "benefits", "“there", "is", "a", "light", "at", "the", "end", "of", "the", "tunnel”", "neil", "bradley", "the", "chief", "policy", "officer", "for", "the", "us", "chamber", "of", "commerce", "said", "in", "an", "interview", "“we", "have", "to", "get", "to", "that", "light", "as", "quickly", "as", "possible", "and", "employers", "can", "be", "a", "huge", "asset", "in", "getting", "us", "there”", "andy", "slavitt", "a", "senior", "health", "adviser", "for", "the", "biden", "administration", "said", "it", "was", "issuing", "a", "“call", "to", "action”", "to", "corporate", "america", "to", "urge", "businesses", "to", "make", "“unique", "commitments", "that", "bring", "their", "unique", "skills", "and", "resources”", "to", "fighting", "the", "pandemic", "he", "ticked", "off", "a", "range", "of", "ways", "that", "the", "private", "sector", "has", "already", "become", "engaged", "ford", "and", "the", "gap", "intend", "to", "donate", "more", "than", "100", "million", "masks", "for", "free", "distribution", "uber", "and", "lyft", "are", "teaming", "up", "with", "pharmacies", "to", "offer", "free", "or", "discounted", "rides", "to", "vaccination", "sties", "best", "buy", "dollar", "general", "and", "target", "will", "give", "workers", "paid", "time", "off", "to", "get", "a", "shot", "mr", "slavitt", "said", "the", "initiatives", "would", "be", "coordinated", "by", "the", "companies", "themselves", "and", "the", "administration", "did", "not", "have", "a", "formal", "role", "all", "three", "of", "the", "administration", "officials", "—", "mr", "slavitt", "dr", "fauci", "and", "dr", "walensky", "—", "made", "clear", "that", "vaccination", "and", "doubling", "down", "on", "public", "health", "measures", "that", "stem", "the", "spread", "of", "the", "virus", "like", "wearing", "masks", "and", "social", "distancing", "were", "the", "only", "path", "out", "of", "the", "pandemic", "“we", "may", "be", "done", "with", "the", "virus”", "dr", "walensky", "said", "“but", "clearly", "the", "virus", "is", "not", "done", "with", "us”"]
+
 let selectedWords = [];
-let mouthX, mouthY;
-let mouthDistance;
 
 // particles
 class Particle {
   // setting the co-ordinates, radius and the
   // speed of a particle in both the co-ordinates axes.
     constructor(){
-      this.x = random(0,width);
-      this.y = random(0,height);
-      this.r = random(1,8);
+      this.x = random(0,windowWidth);
+      this.y = random(0,windowHeight);
+      this.r = random(1, cube);
       this.xSpeed = random(-1,1);
       this.ySpeed = random(-1,1.5);
       this.word = random(wordlist); //assign a random word to the particle
@@ -26,27 +43,25 @@ class Particle {
   // creation of a particle.
     createParticle() {
       stroke('black');
-      
       push();
-      translate(this.x-windowWidth/2,this.y-windowHeight/2);
-      if (dist(mouthX, mouthY, this.x, this.y) < 50) {
+      translate(-this.x+windowWidth/2,this.y-windowHeight/2);
+      if (dist(handX, handY, this.x, this.y) < threshold) {
         fill('black');
         stroke('white');
         rotateX(frameCount * 0.05);
         rotateY(frameCount * 0.05);
-        box(this.r*2);
+        box(this.r*1.5);
       } else {
         box(this.r);
       }
       pop();
 
       push();
-      translate(this.x-windowWidth/2,this.y-windowHeight/2);
-      if (dist(mouthX, mouthY, this.x, this.y) < 50) {
-        scale(-1, 1); //flip webcam
+      translate(-this.x+windowWidth/2,this.y-windowHeight/2);
+      if (dist(handX, handY, this.x, this.y) < threshold) {
         textAlign(CENTER, CENTER);
         fill('black');
-        textSize(14 + this.r/2);
+        textSize(cube/4 + this.r/2);
         textFont(fontSans);
         text(this.word,0,12);
       }
@@ -55,22 +70,26 @@ class Particle {
   
   // setting the particle in motion.
     moveParticle() {
-      if(this.x < 0 || this.x > width)
+      if(this.x <= 0 || this.x >= windowWidth) {
         this.xSpeed*=-1;
-      if(this.y < 0 || this.y > height)
+      } 
+      if(this.y <= 0 || this.y >= windowHeight) {
         this.ySpeed*=-1;
+      }
       this.x+=this.xSpeed;
       this.y+=this.ySpeed;
     }
   }
 
 // mesh annotations
-// source: https://github.com/tensorflow/tfjs-models/blob/master/facemesh/src/keypoints.ts
+// source: https://github.com/tensorflow/tfjs-models/blob/master/handpose/src/keypoints.ts
 const mesh = {
-  lipsUpperOuter: [61, 185, 40, 39, 37, 0, 267, 269, 270, 409, 291],
-  lipsLowerOuter: [146, 91, 181, 84, 17, 314, 405, 321, 375, 291],
-  lipsUpperInner: [78, 191, 80, 81, 82, 13, 312, 311, 310, 415, 308],
-  lipsLowerInner: [78, 95, 88, 178, 87, 14, 317, 402, 318, 324, 308],
+  thumb: [1, 2, 3, 4],
+  indexFinger: [5, 6, 7, 8],
+  middleFinger: [9, 10, 11, 12],
+  ringFinger: [13, 14, 15, 16],
+  pinky: [17, 18, 19, 20],
+  palmBase: [0]
 };
 
 function preload() {
@@ -79,106 +98,128 @@ function preload() {
 }
 
 function setup() {
+  //resolution related
+  cube = windowWidth/50;
+
+  r = windowWidth/120;
+  threshold = windowWidth/5;
+  frameRate(24);
+  video = createCapture(VIDEO);
+  video.size(windowWidth, windowHeight);
+  handpose = ml5.handpose(video, modelReady);
+  // This sets up an event that fills the global variable "predictions"
+  // with an array every time new hand poses are detected
+  handpose.on("predict", results => {
+    predictions = results;
+    if (predictions[0]) { //only works when hand is detected
+      handDistance = dist(
+          predictions[0].landmarks[4][0], predictions[0].landmarks[4][1], predictions[0].landmarks[4][2],
+          predictions[0].landmarks[8][0], predictions[0].landmarks[8][1], predictions[0].landmarks[8][2]
+      );
+      handX = (predictions[0].boundingBox.bottomRight[0] + predictions[0].boundingBox.topLeft[0]) / 2;
+      handY = (predictions[0].boundingBox.bottomRight[1] + predictions[0].boundingBox.topLeft[1]) / 2;
+    }
+  });
+
+  // Hide the video element, and just show the canvas
+  video.hide();
+
+
   canvas = createCanvas(windowWidth, windowHeight, WEBGL);
   canvas.position(0,0);
   canvas.style('z-index','-1')
-
-  video = createCapture(VIDEO);
-  video.size(windowWidth, windowHeight);
-
-  // face mesh
-  //todo: if no face is detected on starting the model, ask user to refresh the page. facePred[0].faceInViewConfidence == 1
-  facemesh = ml5.facemesh(video, modelReady);
-  facemesh.on("predict", results => {
-    facePred = results;  
-    if (facePred[0]) { //only works when face is detected
-      mouthDistance = dist(
-        facePred[0].mesh[13][0], facePred[0].mesh[13][1], facePred[0].mesh[13][2],
-        facePred[0].mesh[14][0], facePred[0].mesh[14][1], facePred[0].mesh[14][2]
-      );
-    }
-  });
   
-  video.hide();
-  
-  for(let i = 0;i<width/10;i++){
+  for(let i = 0;i<windowWidth/20;i++){
     particles.push(new Particle());
   }
 }
 
 function modelReady() {
   console.log("Model ready!");
-  
 }
 
 function draw() {
-  scale(-1, 1); //flip webcam
-  if (selectedWords.join(' ').length > 300) {
+  // if (!handIsOpen) {
+  //   console.log('hand is closed');
+  // }
+  //if word is too long, refresh
+  if (selectedWords.join(' ').length > maxwords) {
     selectedWords = [];
   }
 
   blendMode(BLEND);
   background(255);
 
-    //words
-    push();
-    scale(-1, 1); //flip webcam again
-    fill('black');
-    textFont(fontPixel);
-    textSize(60);
-    text(selectedWords.join(' '),-windowWidth/2+40,-windowHeight/2+40, windowWidth-80,windowHeight-80);
-    pop();
+  //words
+  push();
+  fill('black');
+  textFont(fontPixel);
+  textSize(cube*2.4);
+  text(selectedWords.join(' '),-windowWidth/2+windowWidth/32,-windowHeight/2+windowHeight/32, windowWidth-windowWidth/64,windowHeight-windowHeight/64);
+  pop();
 
-    //ellipse
-    push();
-    stroke(0)
-    fill('rgba(255,255,255)');
-    ellipse(mouthX-windowWidth/2, mouthY-windowHeight/2, 100);
-    pop();
+  // bounding box
+  // push();
+  // scale(-1, 1);
+  // stroke(0)
+  // noFill();
+  // ellipse(handX-windowWidth/2, handY-windowHeight/2, 100);
+  // if (predictions[0]) {
+  //   rect(predictions[0].boundingBox.topLeft[0]-windowWidth/2,predictions[0].boundingBox.topLeft[1]-windowHeight/2,predictions[0].boundingBox.bottomRight[0]-predictions[0].boundingBox.topLeft[0], predictions[0].boundingBox.bottomRight[1]-predictions[0].boundingBox.topLeft[1]);
+  // }
+  // pop();
 
-    //particles
-    for(let i = 0;i<particles.length;i++) {
-      particles[i].createParticle();
-      if (dist(mouthX, mouthY, particles[i].x, particles[i].y) < 50 && mouthIsOpen()) {
-        selectedWords.push(particles[i].word);
-        particles.splice(i,1)
-      }
-      particles[i].moveParticle();
+  //particle creation and deletion
+  for(let i = 0;i<particles.length;i++) {
+    particles[i].createParticle();
+    if (dist(handX, handY, particles[i].x, particles[i].y) < 80 && !handIsOpen()) {
+      selectedWords.push(particles[i].word);
+      particles.splice(i,1)
     }
+    try {
+      particles[i].moveParticle();
+    } catch {
+      // console.log('moveParticle error');
+    }
+  }
+  //  create new particles when there's few
+  if (particles.length <10) {
+      particles.push(new Particle());
+  }
 
-        
-    //lips
-    drawBox('black','lipsUpperOuter', 'rgba(255,255,255, 0.05)');
-    drawBox('black','lipsLowerOuter', 'rgba(255,255,255, 0.05)');
-    drawBox('black','lipsUpperInner', 'rgba(255,255,255, 0.05)');
-    drawBox('black','lipsLowerInner', 'rgba(255,255,255, 0.05)');
+  // handpose
+  push();
+  translate(windowWidth/2, -windowHeight/2);
+  scale(-1, 1); //flip webcam
+  drawKeypoints();
+  pop();
 }
-
-function drawBox(color = 'black', area, fillColor, size = 4) {
-  for (let i = 0; i < facePred.length; i += 1) {
-    const keypoints = facePred[i].scaledMesh;
-    for (let j = 0; j < keypoints.length - 2; j++) {
-      if (mesh[area].includes(j)) {
-        const [x, y] = keypoints[j];
-        mouthX = x;
-        mouthY = y;
-        stroke(color);
-        fill(fillColor);
-        push();
-        translate(x-windowWidth/2,y-windowHeight/2);
-        ellipse(0,0,size)
-        pop();
-      }
+ 
+//draw handpose keypoints
+function drawKeypoints() {
+  for (let i = 0; i < predictions.length; i += 1) {
+    const prediction = predictions[i];
+    for (let j = 0; j < prediction.landmarks.length; j += 1) {
+      const keypoint = prediction.landmarks[j];
+      push();
+      stroke('rgb(150,150,150)');
+      fill('rgb(220,220,220)');
+      // if (j == 4 || j == 8) {
+      //   fill('red');
+      // }else {
+      //   fill('black');
+      // }
+      rect(keypoint[0], keypoint[1], r, r);
+      pop();
     }
   }
 }
 
 // calculate distance between points 13 and 14 (center of mouth)s
-function mouthIsOpen() {
-  if (mouthDistance > 5) {
+function handIsOpen() {
+  if (handDistance > threshold) { // modify distance for testing
     return true;
   } else {
     return false;
   }
 }
-  
