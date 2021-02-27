@@ -71,7 +71,7 @@ function setup() {
   canvas.position(0,0);
   canvas.style('z-index','-1')
   
-  for(let i = 0;i<width/10;i++){
+  for(let i = 0;i<width/25;i++){
     particles.push(new Particle());
   }
 }
