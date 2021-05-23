@@ -1,4 +1,3 @@
-let video;
 let particles = [];
 let fontSans, fontPixel;
 let selectedWords = [];
@@ -9,22 +8,24 @@ let words = [];
 function preload() {
   fontSans = loadFont('./OpenSans.ttf');
   fontPixel = loadFont('./Mister_Pixel_Regular.otf');
+  img = loadImage('./logo_bnw.png');
+  imgInv = loadImage('./logo_inv.png')
 }
 
 fetch('./Mission.txt')
   .then(response => response.text())
   .then((data) => {
-    let words = data.split(" ");
-    for (let w in words) {
-      let word = words[w];
+    let splitWords = data.split(" ");
+    for (let w in splitWords) {
+      let word = splitWords[w];
       word = word.replace(/(\r\n|\n|\r)/gm, ''); //remove line breaks
       word = word.replace(/[-_?!.,:;\(\)]/g, '');
       word = word.toLowerCase();
-      if (word.length < 1) words.splice(w,1);
-      else words[w] = word; //update
+      if (word.length < 1) splitWords.splice(w,1);
+      else splitWords[w] = word; //update
     }
+    Array.prototype.push.apply(words, splitWords)
     // console.log(data);
-    console.log(words);
   })
 
 // particles
@@ -34,7 +35,7 @@ class Particle {
     constructor(){
       this.x = random(0,width);
       this.y = random(0,height);
-      this.r = random(1,8);
+      this.r = random(20,50);
       this.xSpeed = random(-1,1);
       this.ySpeed = random(-1,1.5);
       this.word = random(words); //assign a random word to the particle
@@ -42,17 +43,20 @@ class Particle {
   
   // creation of a particle.
     createParticle() {
-      stroke('black');
+      // stroke('black');
       
       push();
       translate(this.x-windowWidth/2,this.y-windowHeight/2);
       if (dist(mouseX, mouseY, this.x, this.y) < 50) {
-        fill('black');
+        // fill('black');
+        // stroke('white');
+        texture(imgInv);
         stroke('white');
         rotateX(frameCount * 0.05);
         rotateY(frameCount * 0.05);
         box(this.r*2);
       } else {
+        texture(img);
         box(this.r);
       }
       pop();
@@ -64,7 +68,7 @@ class Particle {
         fill('black');
         textSize(14 + this.r/2);
         textFont(fontSans);
-        text(this.word,0,12);
+        text(this.word,0, 80);
       }
       pop();
     }
@@ -85,7 +89,7 @@ function setup() {
   canvas.position(0,0);
   canvas.style('z-index','-1')
   
-  for(let i = 0;i<width/25;i++){
+  for(let i = 0;i<width/100;i++){
     particles.push(new Particle());
   }
 }
@@ -109,8 +113,8 @@ function draw() {
   //ellipse
   push();
   stroke(0)
-  fill('rgba(255,255,255)');
-  ellipse(mouseX-windowWidth/2, mouseY-windowHeight/2, 100);
+  noFill();
+  ellipse(mouseX-windowWidth/2, mouseY-windowHeight/2, 200);
   pop();
   
   //particles
@@ -120,7 +124,11 @@ function draw() {
       selectedWords.push(particles[i].word);
       particles.splice(i,1)
     }
-    particles[i].moveParticle();
+    try {
+      particles[i].moveParticle();
+    } catch {
+      // console.log('moveParticle error');
+    }
   }
 
 }
